@@ -1,6 +1,6 @@
 body {
     margin: 0;
-    background-color: black;
+    background-color: seashell;
 }
 
 /* .container {
@@ -14,18 +14,18 @@ body {
     display: flex;
     margin: 10% auto;
     flex-wrap: wrap;
-    border: 1px solid skyblue;
-    width: 50vw;
+    border: .5vh solid skyblue;
+    width: 50vh;
     height: 50vh;
-    padding: 0;
 }
 
 
 .pixel {
     box-sizing: border-box;
-    /* border: 1px solid wheat; */
+    border-radius: 100%;
     margin: 0;
     flex: 1 0 1%;
+    background-color: seashell;
 }
 
 .pixel:hover {

@@ -16,24 +16,28 @@ initializeDiv(10000, 'div');
 //change color of div if mouse is pressed and hovered over a pixel
 //change color on event (for mousedown & mouseover only)
 let isMousePressed = false;
-canvas.onmousedown = ()=> isMousePressed = true;
-document.onmouseup = () => {
-    isMousePressed = false
+canvas.onmousedown = (e)=> {
+    e.preventDefault()
+    isMousePressed = true
+    console.log('canvas down');
+};
+window.onmouseup = () => {
+    isMousePressed = false;
     console.log('up')    
 }
 
-canvas.addEventListener('mousemove', e => {
+canvas.addEventListener('mouseover', e => {
     const eventElement = e.target;
     if(eventElement.className !== 'canvas'){
-        if(isMousePressed) {
+        if(isMousePressed) { 
             eventElement.style.backgroundColor = 'red';
             eventElement.style.cursor = 'grabbing';
         }
         eventElement.onmousedown = ()=> {
+            e.stopPropagation();
+            console.log('pixel mousedown')
             eventElement.style.backgroundColor = 'red';
-            eventElement.style.cursor = 'grabbing';s
         }
     };
-
 })
 
