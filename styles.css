@@ -10,20 +10,25 @@ body {
     height: 100%;
 } */
 
+.heading {
+    text-align: center;
+    margin-top: 5vh;
+    font-family: sans-serif;
+}
+
 .canvas {
     display: flex;
-    margin: 10% auto;
+    margin: 5vh auto;
     flex-wrap: wrap;
     border: .5vh solid skyblue;
-    width: 50vh;
-    height: 50vh;
+    width: 70vh;
+    height: 70vh;
     cursor: grab;
 }
 
 
 .pixel {
     box-sizing: border-box;
-    /* border-radius: 100%; */
     margin: 0;
     flex: 1 0;
     background-color: seashell;
@@ -36,4 +41,14 @@ body {
 .buttons {
     display: flex;
     justify-content: center;
+    padding: 10px;
+    width: 200px;
+    height: 25px;
+    margin: 0 auto;
+    border-radius: 100px;
+    background-color: skyblue;
+}
+
+.slider {
+    cursor: pointer;
 }

@@ -1,14 +1,19 @@
 const container = document.querySelector('.container');
+const heading = document.createElement('h1');
+heading.innerText = 'Etch-A-Sketch';
+heading.className = 'heading';
+container.appendChild(heading);
+
 const canvas = document.createElement('div');
 container.appendChild(canvas);
 canvas.className = 'canvas';
 
 let pixelList = '';
 
-const initializeDiv = (size, type) => {
+const initializeDiv = (size) => {
     let length = Math.sqrt(size);
     for(let n = 0; n < size; n++) {
-        const element = document.createElement(type);
+        const element = document.createElement('div');
         canvas.appendChild(element);
         element.className = 'pixel';
     }
@@ -32,13 +37,14 @@ const sliderAttribute = {
     name: 'pixel-slider',
     min: '4',
     max: '16',
-    step: '4'
+    step: '4',
+    value: '4'
 }
 for(let [className, attribute] of Object.entries(sliderAttribute)){
     slider.setAttribute(className, attribute);
 }
 
-//change color of div if mouse is pressed and hovered over a <pixel></pixel>
+//change color of div if mouse is pressed and hovered over a pixel
 //change color on event (for mousedown & mouseover only)
 let isMousePressed = false;
 canvas.onmousedown = (e)=> {
@@ -47,7 +53,6 @@ canvas.onmousedown = (e)=> {
 };
 window.onmouseup = () => {
     isMousePressed = false;
-    isSliderPressed = false;
 }
 
 canvas.addEventListener('mouseover', e => {
@@ -64,12 +69,6 @@ canvas.addEventListener('mouseover', e => {
     };
 })
 
-
-// let isSliderPressed = false;
-// slider.onmousedown = () => {
-//     isSliderPressed = true;
-// }
-
 slider.addEventListener('change', (e)=> {
     canvas.innerHTML = '';
     const value = e.target.value;
@@ -78,20 +77,20 @@ slider.addEventListener('change', (e)=> {
         value == 8 ? length = 32 : '';
         value == 12 ? length = 64 : '';
         value == 16 ? length = 100 : '';
-        initializeDiv(length * length, 'div');
+        initializeDiv(length ** 2);
     }
+    pixelList.forEach(e => e.style.border = '1px solid black')
 })
 
+const changeEvent = new Event('change');
+slider.dispatchEvent(changeEvent);
+
 slider.onmousedown = () => {
-    const changeEvent = new Event('change');
     slider.dispatchEvent(changeEvent);
-        pixelList.forEach(e => {
-        e.style.border = '1px solid black';
-    })
 } 
 
-slider.onmouseup = () => {
+canvas.onmouseup = () => {
     pixelList.forEach(e => {
-        e.style.border = 'transparent';
+        e.style.border = 'none'
     })
 }
