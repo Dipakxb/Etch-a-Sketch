@@ -23,14 +23,25 @@ const initializeDiv = (size) => {
     })
 }
 
-const buttons = document.createElement('div');
-container.appendChild(buttons);
-buttons.className = 'buttons'
+//buttons container
+const buttonsContainer = document.createElement('div');
+container.appendChild(buttonsContainer);
+buttonsContainer.className = 'buttons-container';
 
+//slider container
+const sliderContainer = document.createElement('div');
+buttonsContainer.appendChild(sliderContainer);
+sliderContainer.className = 'slider-container';
+
+//slider label
 const sliderLabel = document.createElement('label');
+sliderLabel.innerText = "16x16 32x32 64x64 100x100"
+sliderLabel.className = 'slider-label';
+sliderContainer.appendChild(sliderLabel);
 
+//slider
 const slider = document.createElement('input');
-buttons.appendChild(slider);
+sliderContainer.appendChild(slider);
 const sliderAttribute = {
     class: 'slider',
     type: 'range',
@@ -55,19 +66,25 @@ window.onmouseup = () => {
     isMousePressed = false;
 }
 
+
 canvas.addEventListener('mouseover', e => {
     const eventElement = e.target;
     if(eventElement.className !== 'canvas'){
+        const elementStyle = eventElement.style;
         if(isMousePressed) { 
-            eventElement.style.backgroundColor = 'red';
-            eventElement.style.cursor = 'grabbing';
+            elementStyle.cursor = 'grabbing'
+            isPaintSelected ? elementStyle.backgroundColor = 'red' : false;
+            isEraserSelected ? elementStyle.backgroundColor = 'seashell' : false;
         }
         eventElement.onmousedown = ()=> {
-            e.stopPropagation();
-            eventElement.style.backgroundColor = 'red';
+            isPaintSelected ? elementStyle.backgroundColor = 'red' : false;
+            isEraserSelected ? elementStyle.backgroundColor = 'seashell' : false;
         }
     };
 })
+
+
+// add slider to change the pixel density, showing the grid before using canvas.
 
 slider.addEventListener('change', (e)=> {
     canvas.innerHTML = '';
@@ -93,4 +110,32 @@ canvas.onmouseup = () => {
     pixelList.forEach(e => {
         e.style.border = 'none'
     })
+}
+
+
+// Add Eraser with eraser tool selected erase the pixel.
+
+//paint button
+const paint = document.createElement('button');
+paint.className = 'paint-button';
+paint.innerText = 'Paint';
+buttonsContainer.appendChild(paint);
+
+let isPaintSelected = true;
+paint.onclick = () => { 
+    isPaintSelected = isPaintSelected ? false : true;
+    isEraserSelected = false;
+
+}
+
+//eraser button
+const eraser = document.createElement('button');
+eraser.className = 'eraser-button';
+eraser.innerText = 'eraser';
+buttonsContainer.appendChild(eraser);
+
+let isEraserSelected = false;
+eraser.onclick = () => { 
+    isEraserSelected = isEraserSelected ? false : true;
+    isPaintSelected = false;
 }
