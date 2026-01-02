@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Honk:MORF@15&family=Pixelify+Sans:wght@400..700&display=swap');
+
 body {
     margin: 0;
     background-color: seashell;
@@ -13,17 +15,18 @@ body {
 .heading {
     text-align: center;
     margin-top: 5vh;
-    font-family: sans-serif;
+    font-family: honk;
+    font-size: 300%;
 }
 
 .canvas {
     display: flex;
-    margin: 5vh auto;
     flex-wrap: wrap;
     border: .5vh solid skyblue;
     width: 70vh;
     height: 70vh;
     cursor: grab;
+    margin: 0 auto 1%;
 }
 
 
@@ -40,13 +43,19 @@ body {
 
 .buttons-container {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    gap: .5%;
+    margin: 0;
 }
 
+.buttons {
+    display: flex;
+    justify-content: center;
+}
 .slider-container {
     order: 1;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     padding: 10px;
     width: 200px;
@@ -55,16 +64,27 @@ body {
     background-color: skyblue;
 }
 
+.slider-label {
+    margin-left: 5px;
+    margin: 0;
+    font-family: Pixelify Sans;
+}
+
 .slider {
-    cursor: pointer;
+    accent-color: black;
+    width: 90%;
 }
 
-.paint-button {
+.paint {
+    width: 4vh;
+    height: 4vh;
     order: 0;
-    border-radius: 100%;
+    filter: invert(40%);
 }
 
-.eraser-button {
-    border-radius: 100%;
-    order: 2
+.eraser {
+    width: 3vh;
+    height: 3vh;
+    padding: .5vh;
+    order: 2;
 }

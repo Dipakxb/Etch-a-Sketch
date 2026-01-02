@@ -28,16 +28,21 @@ const buttonsContainer = document.createElement('div');
 container.appendChild(buttonsContainer);
 buttonsContainer.className = 'buttons-container';
 
-//slider container
-const sliderContainer = document.createElement('div');
-buttonsContainer.appendChild(sliderContainer);
-sliderContainer.className = 'slider-container';
-
 //slider label
 const sliderLabel = document.createElement('label');
 sliderLabel.innerText = "16x16 32x32 64x64 100x100"
+buttonsContainer.appendChild(sliderLabel);
 sliderLabel.className = 'slider-label';
-sliderContainer.appendChild(sliderLabel);
+
+//buttons
+const buttons = document.createElement('div');
+buttonsContainer.appendChild(buttons);
+buttons.className = 'buttons';
+
+//slider container
+const sliderContainer = document.createElement('div');
+buttons.appendChild(sliderContainer);
+sliderContainer.className = 'slider-container';
 
 //slider
 const slider = document.createElement('input');
@@ -51,15 +56,20 @@ const sliderAttribute = {
     step: '4',
     value: '4'
 }
-for(let [className, attribute] of Object.entries(sliderAttribute)){
-    slider.setAttribute(className, attribute);
+
+function addAttribute(element, attribute) {
+    for(let [className, at] of Object.entries(attribute)){
+        element.setAttribute(className, at);
+    }
 }
+
+addAttribute(slider, sliderAttribute)
 
 //change color of div if mouse is pressed and hovered over a pixel
 //change color on event (for mousedown & mouseover only)
 let isMousePressed = false;
 canvas.onmousedown = (e)=> {
-    e.preventDefault()
+    e.preventDefault();
     isMousePressed = true;
 };
 window.onmouseup = () => {
@@ -72,13 +82,13 @@ canvas.addEventListener('mouseover', e => {
     if(eventElement.className !== 'canvas'){
         const elementStyle = eventElement.style;
         if(isMousePressed) { 
-            elementStyle.cursor = 'grabbing'
-            isPaintSelected ? elementStyle.backgroundColor = 'red' : false;
-            isEraserSelected ? elementStyle.backgroundColor = 'seashell' : false;
+            elementStyle.cursor = 'grabbing';
+            isPaintSelected ? elementStyle.backgroundColor = 'red' : '';
+            isEraserSelected ? elementStyle.backgroundColor = 'seashell' : '';
         }
-        eventElement.onmousedown = ()=> {
-            isPaintSelected ? elementStyle.backgroundColor = 'red' : false;
-            isEraserSelected ? elementStyle.backgroundColor = 'seashell' : false;
+        eventElement.onmousedown = ()=> {   
+            isPaintSelected ? elementStyle.backgroundColor = 'red' : '';
+            isEraserSelected ? elementStyle.backgroundColor = 'seashell' : '';
         }
     };
 })
@@ -96,7 +106,7 @@ slider.addEventListener('change', (e)=> {
         value == 16 ? length = 100 : '';
         initializeDiv(length ** 2);
     }
-    pixelList.forEach(e => e.style.border = '1px solid black')
+    pixelList.forEach(e => e.style.border = '1px solid black');
 })
 
 const changeEvent = new Event('change');
@@ -108,34 +118,44 @@ slider.onmousedown = () => {
 
 canvas.onmouseup = () => {
     pixelList.forEach(e => {
-        e.style.border = 'none'
+        e.style.border = 'none';
     })
 }
-
 
 // Add Eraser with eraser tool selected erase the pixel.
 
 //paint button
-const paint = document.createElement('button');
-paint.className = 'paint-button';
-paint.innerText = 'Paint';
-buttonsContainer.appendChild(paint);
+const paint = document.createElement('img');
+buttons.appendChild(paint);
+const paintAttribute = {
+    class: 'paint button',
+    src: './images/paint.png',
+    alt: 'Paint Button'
+}
+addAttribute(paint, paintAttribute)
 
 let isPaintSelected = true;
 paint.onclick = () => { 
-    isPaintSelected = isPaintSelected ? false : true;
+    isPaintSelected = !isPaintSelected;
     isEraserSelected = false;
-
+    paint.style.filter = isPaintSelected ? 'invert(40%)' : 'invert(0%)';
+    eraser.style.filter = 'invert(0%)';
 }
 
 //eraser button
-const eraser = document.createElement('button');
-eraser.className = 'eraser-button';
-eraser.innerText = 'eraser';
-buttonsContainer.appendChild(eraser);
+const eraser = document.createElement('img');
+buttons.appendChild(eraser);
+const eraserAttribute = {
+    class: 'eraser button',
+    src: './images/eraser.png',
+    alt: 'Eraser Button'
+}
+addAttribute(eraser, eraserAttribute)
 
 let isEraserSelected = false;
 eraser.onclick = () => { 
-    isEraserSelected = isEraserSelected ? false : true;
+    isEraserSelected = !isEraserSelected;
     isPaintSelected = false;
+    eraser.style.filter = isEraserSelected ? 'invert(40%)' : 'invert(0%)';
+    paint.style.filter = 'invert(0%)';
 }
