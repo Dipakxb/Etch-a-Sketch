@@ -30,7 +30,6 @@ buttonsContainer.className = 'buttons-container';
 
 //slider label
 const sliderLabel = document.createElement('label');
-sliderLabel.innerText = "16x16 32x32 64x64 100x100"
 buttonsContainer.appendChild(sliderLabel);
 sliderLabel.className = 'slider-label';
 
@@ -82,13 +81,12 @@ canvas.addEventListener('mouseover', e => {
     if(eventElement.className !== 'canvas'){
         const elementStyle = eventElement.style;
         if(isMousePressed) { 
-            elementStyle.cursor = 'grabbing';
-            isPaintSelected ? elementStyle.backgroundColor = 'red' : '';
-            isEraserSelected ? elementStyle.backgroundColor = 'seashell' : '';
+            isPaintSelected ? elementStyle.backgroundColor = '#DD0303' : '';
+            isEraserSelected ? elementStyle.backgroundColor = '#F5F2F2' : '';
         }
         eventElement.onmousedown = ()=> {   
-            isPaintSelected ? elementStyle.backgroundColor = 'red' : '';
-            isEraserSelected ? elementStyle.backgroundColor = 'seashell' : '';
+            isPaintSelected ? elementStyle.backgroundḌColor = '#DD0303' : '';
+            isEraserSelected ? elementStyle.backgroundColor = '#F5F2F2' : '';
         }
     };
 })
@@ -106,6 +104,7 @@ slider.addEventListener('change', (e)=> {
         value == 16 ? length = 100 : '';
         initializeDiv(length ** 2);
     }
+    sliderLabel.innerText = `${length}x${length}`
     pixelList.forEach(e => e.style.border = '1px solid black');
 })
 
@@ -119,7 +118,7 @@ slider.onmousedown = () => {
 canvas.onmouseup = () => {
     pixelList.forEach(e => {
         e.style.border = 'none';
-    })
+    });
 }
 
 // Add Eraser with eraser tool selected erase the pixel.
@@ -150,7 +149,7 @@ const eraserAttribute = {
     src: './images/eraser.png',
     alt: 'Eraser Button'
 }
-addAttribute(eraser, eraserAttribute)
+addAttribute(eraser, eraserAttribute);
 
 let isEraserSelected = false;
 eraser.onclick = () => { 
