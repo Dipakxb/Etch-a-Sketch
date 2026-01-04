@@ -3,9 +3,15 @@ const heading = document.createElement('h1');
 heading.innerText = 'Etch-A-Sketch';
 heading.className = 'heading';
 container.appendChild(heading);
+let brushColor = '#DD0303';
+const canvasColor = '#F5F2F2';
+
+const canvasContainer = document.createElement('div');
+canvasContainer.className = "canvas-container";
+container.appendChild(canvasContainer);
 
 const canvas = document.createElement('div');
-container.appendChild(canvas);
+canvasContainer.appendChild(canvas);
 canvas.className = 'canvas';
 
 let pixelList = '';
@@ -17,7 +23,7 @@ const initializeDiv = (size) => {
         canvas.appendChild(element);
         element.className = 'pixel';
     }
-    pixelList = document.querySelectorAll('.pixel')
+    pixelList = document.querySelectorAll('.pixel');
     pixelList.forEach(e => {
         e.style.flexBasis = `${(1/length) * 100}%`;
     })
@@ -67,28 +73,32 @@ addAttribute(slider, sliderAttribute)
 //change color of div if mouse is pressed and hovered over a pixel
 //change color on event (for mousedown & mouseover only)
 let isMousePressed = false;
+let hasPixelClicked = false;
+
 canvas.onmousedown = (e)=> {
     e.preventDefault();
     isMousePressed = true;
-};
-window.onmouseup = () => {
-    isMousePressed = false;
+    colorPicker.dispatchEvent(changeEvent);
 }
 
+window.onmouseup = () => {
+    isMousePressed = false;
+    hasPixelClicked = false;
+}
 
 canvas.addEventListener('mouseover', e => {
     const eventElement = e.target;
     if(eventElement.className !== 'canvas'){
         const elementStyle = eventElement.style;
         if(isMousePressed) { 
-            isPaintSelected ? elementStyle.backgroundColor = '#DD0303' : '';
-            isEraserSelected ? elementStyle.backgroundColor = '#F5F2F2' : '';
+            isPaintSelected ? elementStyle.backgroundColor = brushColor: '';
+            isEraserSelected ? elementStyle.backgroundColor = canvasColor: '';
         }
-        eventElement.onmousedown = ()=> {   
-            isPaintSelected ? elementStyle.backgroundḌColor = '#DD0303' : '';
-            isEraserSelected ? elementStyle.backgroundColor = '#F5F2F2' : '';
+        eventElement.onmousedown = () => {
+            isPaintSelected ? elementStyle.backgroundColor = brushColor: '';
+            isEraserSelected ? elementStyle.backgroundColor = canvasColor: '';
         }
-    };
+    }
 })
 
 
@@ -104,7 +114,7 @@ slider.addEventListener('change', (e)=> {
         value == 16 ? length = 100 : '';
         initializeDiv(length ** 2);
     }
-    sliderLabel.innerText = `${length}x${length}`
+    sliderLabel.innerText = `${length}x${length}`;
     pixelList.forEach(e => e.style.border = '1px solid black');
 })
 
@@ -158,3 +168,47 @@ eraser.onclick = () => {
     eraser.style.filter = isEraserSelected ? 'invert(40%)' : 'invert(0%)';
     paint.style.filter = 'invert(0%)';
 }
+
+//Color wheel
+const colorPicker = document.createElement('input');
+const colorPickerAtr = {
+    type: 'color',
+    name: 'color picker',
+    value: brushColor,
+    class: 'color-picker',
+}
+
+colorPicker.onchange = (e) => {
+    brushColor = e.target.value;
+}
+
+//color container
+const colorContainer = document.createElement('div');
+colorContainer.className = 'color-container';
+canvasContainer.appendChild(colorContainer);
+
+//color picker
+addAttribute(colorPicker, colorPickerAtr);
+colorContainer.appendChild(colorPicker);
+
+//color pointer 
+const colorPointer = document.createElement('img');
+const colorPointerAtr = {
+    class: 'color-pointer',
+    src: './images/pointer.png',
+    alt: 'arrow pointing to color picker'
+}
+
+addAttribute(colorPointer, colorPointerAtr);
+colorContainer.appendChild(colorPointer);
+
+// color label
+const colorLabel = document.createElement('img');
+const colorLabelAtr = {
+    class: 'color-label',
+    src: './images/color-label.png',
+    alt: 'arrow pointing to color picker'
+}
+
+addAttribute(colorLabel, colorLabelAtr);
+colorContainer.appendChild(colorLabel);
