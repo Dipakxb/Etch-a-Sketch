@@ -31,7 +31,6 @@ body {
     margin: 0;
     flex: 1 0;
     background-color: #F5F2F2;
-    filter: calc(brightness(1 - 0.5));
 }
 
 .buttons-container {
@@ -114,7 +113,6 @@ body {
 
 .color-pointer {
     width: 6vh;
-    /* transform:rotateY(180deg); */
 }
 
 .color-label {

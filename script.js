@@ -91,16 +91,38 @@ canvas.addEventListener('mouseover', e => {
     if(eventElement.className !== 'canvas'){
         const elementStyle = eventElement.style;
         if(isMousePressed) { 
-            isPaintSelected ? elementStyle.backgroundColor = brushColor: '';
-            isEraserSelected ? elementStyle.backgroundColor = canvasColor: '';
+            if(isPaintSelected) {
+                eventElement.classList.add(1.1);
+                let emp = eventElement.classList[1];      
+                elementStyle.backgroundColor = brushColor;
+                elementStyle.filter = `brightness(calc(${emp} - 0.1))`;
+                eventElement.classList.replace(emp, emp - 0.1);
+            }
+            if(isEraserSelected) {
+                let emp = eventElement.classList[1];
+                elementStyle.backgroundColor = canvasColor;
+                elementStyle.filter = `brightness(1)`;
+                eventElement.classList.replace(emp, 1)
+            }
+        } 
+        eventElement.onmousedown = () =>  {
+            if(isPaintSelected) {
+                eventElement.classList.add(1.1);
+                let emp = eventElement.classList[1];           
+                elementStyle.backgroundColor = brushColor;
+                elementStyle.filter = `brightness(calc(${emp} - 0.1))`;
+                eventElement.classList.replace(emp, emp - 0.1);
+            }
+            if(isEraserSelected) {
+                let emp = eventElement.classList[1];
+                elementStyle.backgroundColor = canvasColor;
+                elementStyle.filter = `brightness(1)`;
+                eventElement.classList.replace(emp, 1);
+            }
         }
-        eventElement.onmousedown = () => {
-            isPaintSelected ? elementStyle.backgroundColor = brushColor: '';
-            isEraserSelected ? elementStyle.backgroundColor = canvasColor: '';
-        }
+
     }
 })
-
 
 // add slider to change the pixel density, showing the grid before using canvas.
 
