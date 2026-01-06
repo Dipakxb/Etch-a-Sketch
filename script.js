@@ -160,7 +160,7 @@ const paint = document.createElement('img');
 buttons.appendChild(paint);
 const paintAttribute = {
     class: 'paint button',
-    src: './images/paint.png',
+    src: 'images/paint.png',
     alt: 'Paint Button'
 }
 addAttribute(paint, paintAttribute)
@@ -178,7 +178,7 @@ const eraser = document.createElement('img');
 buttons.appendChild(eraser);
 const eraserAttribute = {
     class: 'eraser button',
-    src: './images/eraser.png',
+    src: 'images/eraser.png',
     alt: 'Eraser Button'
 }
 addAttribute(eraser, eraserAttribute);
@@ -217,7 +217,7 @@ colorContainer.appendChild(colorPicker);
 const colorPointer = document.createElement('img');
 const colorPointerAtr = {
     class: 'color-pointer',
-    src: './images/pointer.png',
+    src: 'images/pointer.png',
     alt: 'arrow pointing to color picker'
 }
 
@@ -228,7 +228,7 @@ colorContainer.appendChild(colorPointer);
 const colorLabel = document.createElement('img');
 const colorLabelAtr = {
     class: 'color-label',
-    src: './images/color-label.png',
+    src: 'images/color-label.png',
     alt: 'arrow pointing to color picker'
 }
 
